@@ -27,10 +27,17 @@ public class Servlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		Map<String,String[]> map = request.getParameterMap();
-		System.out.println(map.get("text")[0] );
+		Map<String,String[]> map = request.getParameterMap();// ключ - название (в моем случае это text) значение - то.что было введено в поле
+		System.out.println(map.get("text")[0] ); //передача на консоль того, что ввели в форму
 		
 		//request.setAttribute("is_ok", true);
+		
+		
+		//у нас уже есть класс TestDB, который реализует соединение с уже созданной базой данных.
+		// “ак мы записываем в базу то, что было введено в форму на нашей динамической страничке wish.html
+		TestDB testDB = new TestDB();
+		testDB.setValue(map.get("text")[0]);
+		testDB.insert();
 		
 	}
 }
