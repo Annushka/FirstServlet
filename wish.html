@@ -3,17 +3,79 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>wish_fulfilment</title>
+<script type="text/javascript">  
+
+
+function getXmlHttpRequestObject()
+{
+var xmlHttp = false;
+if (window.XMLHttpRequest)
+{
+return new XMLHttpRequest(); //To support the browsers IE7+, Firefox, Chrome, Opera, Safari
+}
+else if(window.ActiveXObject)
+{
+return new ActiveXObject("Microsoft.XMLHTTP"); // For the browsers IE6, IE5 
+}
+else
+{
+alert("Error due to old verion of browser upgrade your browser");
+}
+}
+
+var xmlhttp = new getXmlHttpRequestObject(); //xmlhttp holds the ajax object
+
+function servletPost() {
+		if (xmlhttp) {
+		//var txtname = document.getElementById("txtname");
+		var date = new Date();		
+		xmlhttp.open("POST", "s", true);
+		xmlhttp.onreadystatechange = handleServletPost;
+		xmlhttp.setRequestHeader('Content-Type',
+				'application/x-www-form-urlencoded');
+		xmlhttp.send("date=" + date);
+	}
+	
+}
+
+function handleServletPost() {
+if (xmlhttp.readyState == 4) {
+if(xmlhttp.status == 200) {
+document.getElementById('message').innerHTML=xmlhttp.responseText; 
+//newDev.innerHTML = xmlhttp.responseText;
+}
+else {
+alert("Ajax calling error");
+}
+}
+}
+
+
+  </script>  
+
 </head>
 <body bgcolor="#FFFF00">
-	<h1 align="center">This site fulfil your wish!</h1>
-	<h2 align="center">Write your wish here :) </h2>
-	<FORM align="center" METHOD="GET" ACTION="http://localhost:8080/firstServlet/s">
-		<TEXTAREA NAME="text" WRAP="virtual" COLS="40" ROWS="3">
+	
+	<form align="center" METHOD="GET" ACTION="http://localhost:8080/firstServlet/s">
+<table>
+<tr>
+<h1 align="center">This site fulfil your wish!</h1>
+<h2 align="center">Write your wish here :)</h2>
+<TEXTAREA NAME="text" WRAP="virtual" COLS="40" ROWS="3">
 </TEXTAREA>
-		<P>
-			<INPUT align="center" TYPE="submit" name="fulfilWish"
-				value="Fulfil the wish">
-	</FORM>
+</tr>
+<tr>
+<P>
+	<INPUT align="center" TYPE="submit" name="fulfilWish" value="Fulfil the wish">
+<script> 
+	var t = window.setInterval("servletPost();", 5000);	
+	
+</script> 
+</tr> 
+</table>
+<div id="message"></div> 
+</form>
+	
 </body>
 </html>
 

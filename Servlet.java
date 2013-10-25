@@ -45,6 +45,28 @@ public class Servlet extends HttpServlet {
 		TestDB testDB = new TestDB();
 		testDB.setValue(map.get("text")[0]);
 		testDB.insert();
+		// передаем ответ - в моем случае это будет вся бд
+		response.setContentType("text/html"); // тип контента, отправляемомого серверу
+		PrintWriter out = response.getWriter();
+	
+		out.println(
+			"<HTML>\n" + 
+			"<HEAD><TITLE> wish </TITLE></HEAD>\n" +
+			"<BODY>\n" +
+			"<H1>"+ testDB.getWishContent()+ "</H1>\n" +   // делать через do get do set
+			"</BODY></HTML>");
 		
+	}
+	//doPost method we use to recieve data from ajax. While we are on the wish.html page every 
+	//5 seconds ajax send to server current time and server writes it on console and sends back to write on the html page.
+	
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		PrintWriter out = response.getWriter();
+		Map<String,String[]> map = request.getParameterMap();
+		String date = String.valueOf(map.get("date")[0]);
+		out.println(date);
+		
+		System.out.println(date); //выводим наше время 
 	}
 }
